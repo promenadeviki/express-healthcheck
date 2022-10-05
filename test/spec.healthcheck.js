@@ -24,7 +24,7 @@ describe('express-healthcheck', function () {
             };
             res.status.returns(res);
             next = sinon.stub();
-            sinon.stub(process, 'uptime').returns(100);
+            sinon.stub(process, 'uptime').returns(1e5);
         });
         afterEach(function () {
             process.uptime.restore();
@@ -48,7 +48,7 @@ describe('express-healthcheck', function () {
         it('responds with process uptime as body', function () {
             healthcheck()(req, res, next);
             res.status.should.have.been.calledBefore(res.json);
-            res.json.should.have.been.calledWith({ uptime: 100 });
+            res.json.should.have.been.calledWith({ uptime: '1 day, 3 hours, 46 minutes, 40 seconds' });
         });
 
         describe('`test` method', function () {
